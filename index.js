@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 import inquirer from 'inquirer';
 import fs from 'fs';
+import generateMarkdown from './utils/generateMarkdown.js'
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -45,13 +46,13 @@ const questions = [
         type: "list",
         name: "license",
         message: "Choose a license for this readme (Code included for badges and listed in credits):",
-        choices: ['Apache 2.0 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)]',
-                  'Creative Commons 4.0 Attribution [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)]',
-                  'GPL [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)',
-                  'MIT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)',
+        choices: ['Apache 2.0',
+                  'Creative Commons 4.0 Attribution',
+                  'GPL 3.0',
+                  'MIT'
                   
           ],
-          default: 'MIT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)'
+          default: 'MIT'
       },
       {
         type: "editor",
@@ -76,63 +77,25 @@ const questions = [
       },
       {
         type: "input",
-        name: "file",
-        message: "What would you like to name the file (including extension)?"
+        name: "fileName",
+        message: "Please enter the name of your file, including extension:"
       }
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-//This should probably be its own function, but I'll need to troubleshoot to determine why this didn't work initially. Will work for MVP.
-let readmeContent = `
-# ${data.title}
-
-##Description
-${data.description}
-
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
-## Installation
-${data.installation}
-
-## Usage
-${data.usage}
-
-## Credits
-${data.usage}
-
-## License
-${data.license}
-
-## Badges
-${data.badges}
-
-## Features
-${data.features}
-
-## How to Contribute
-${data.contributorGuidelines}
-
-## Tests
-${data.tests}
-
-## Questions
-Link to Github profile: https://www.github.com/${data.githubProfile}\n
-Email address: ${data.emailAddress}
-`
-//write file
-fs.writeFile(fileName, readmeContent, (err) => err ? console.log(err) : console.log(`File name ${fileName} has been written successfully!`))};
+function writeToFile(fileName, readmeContent) {
+fs.writeFile(fileName, readmeContent, (err) => err ? console.log(err) : console.log(`${fileName} has been written successfully!`))};
+export default writeToFile;
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions)
     .then((answers) => {
-        writeToFile(answers.file, answers)
+        const fileName = answers.fileName;
+        const readmeContent = generateMarkdown(answers)
+        writeToFile(fileName, readmeContent)
       });
+    
 }
 
 // Function call to initialize app
