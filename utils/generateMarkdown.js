@@ -78,10 +78,11 @@ let licenseSection = renderLicenseSection(data.license, licenseLink, licenseBadg
 ${data.description}
 
 ## Table of Contents
+- [License](#license)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
-- [License](#license)
+
 
 ## License
 ${licenseSection}
