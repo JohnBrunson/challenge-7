@@ -83,6 +83,9 @@ ${data.description}
 - [Credits](#credits)
 - [License](#license)
 
+## License
+${licenseSection}
+
 ## Installation
 ${data.installation}
 
@@ -91,9 +94,6 @@ ${data.usage}
 
 ## Credits
 ${data.usage}
-
-## License
-${licenseSection}
 
 ## Badges
 ${data.badges}
